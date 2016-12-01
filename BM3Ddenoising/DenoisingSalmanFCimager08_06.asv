@@ -1,0 +1,42 @@
+%%%Denoising algorithm 
+%%%
+tic;
+%first denoised 
+%yRGB = im2double(imread('D:\Shared\VITA25K\08-06-2015-Denoising_FC_OutDoor\BM3D\ColorMatrixPhotoshopAfterSharpenAndDenoise.tif'));
+%tic;
+%break
+sigma=5;
+[NA, yRGB_est] = CBM3D(1, yRGB, sigma, 'yCbCr');
+imwrite(1*yRGB_est, 'ColorMatrixPhotoshopAfterSharpenAndDenoise_Sigma05.tif', 'tif')
+%Time=toc;
+%%%%%%%%%%%%%%%%
+
+break;
+Address='D:\Shared\CEVLetterBox_4GA-8\';
+ss={'00','01','02','03','04'};
+
+for ii=1:5
+    NameRead=strcat(Address,'Scene2nW_', ss{ii}, '.tif'); 
+    NameWrite=strcat(Address,'Denoised_Scene2nW_', ss{ii}, '.tif'); 
+    yRGB = im2double(imread(NameRead));
+    [NA, yRGB_est] = CBM3D(1, yRGB, sigma);
+    imwrite(yRGB_est, NameWrite, 'tif')
+end
+TimeElaps=toc;
+
+
+%%%%
+break 
+%%%%%A test for a larger sigma 
+ss={'02'}
+sigma=100
+NameRead=strcat(Address,'Scene2nW_', ss{1}, '.tif'); 
+NameWrite=strcat(Address,'Denoised_Scene2nW_', ss{1}, 'Sigma=100', '.tif'); 
+yRGB = im2double(imread(NameRead));
+yRGB=yRGB(:,:,1:3);
+[NA, yRGB_est] = CBM3D(1, yRGB, sigma);
+imwrite(yRGB_est, NameWrite, 'tif')
+    
+    
+    
+    
